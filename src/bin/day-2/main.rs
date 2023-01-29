@@ -7,21 +7,21 @@ fn calc_match_outcome_score(choices: (char, char)) -> i32 {
     match choices.0 {
         'A' => match choices.1 {
             'X' => 3,
-            'Y' => 6,
-            'Z' => 0,
-            _ => panic!("Unexpected char in us choices"),
+            'Y' => 4,
+            'Z' => 8,
+            _ => panic!("Unexpected char in strategy choices"),
         },
         'B' => match choices.1 {
-            'X' => 0,
-            'Y' => 3,
-            'Z' => 6,
-            _ => panic!("Unexpected char in us choices"),
+            'X' => 1,
+            'Y' => 5,
+            'Z' => 9,
+            _ => panic!("Unexpected char in strategy choices"),
         },
         'C' => match choices.1 {
-            'X' => 6,
-            'Y' => 0,
-            'Z' => 3,
-            _ => panic!("Unexpected char us choices"),
+            'X' => 2,
+            'Y' => 6,
+            'Z' => 7,
+            _ => panic!("Unexpected char in strategy choices"),
         },
         _ => panic!("Unexpected char in opponent choices"),
     }
@@ -42,13 +42,6 @@ fn main() {
             split.next().unwrap().chars().next().unwrap(),
         )
             .to_owned();
-
-        match choices.1 {
-            'X' => total_score += 1,
-            'Y' => total_score += 2,
-            'Z' => total_score += 3,
-            _ => println!("Unexpected char in choices"),
-        }
 
         total_score += calc_match_outcome_score(choices);
     }
