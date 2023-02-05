@@ -1,5 +1,6 @@
 #[path = "../../utils.rs"]
 mod utils;
+use itertools::Itertools;
 use std::path::Path;
 use utils::read_lines;
 
@@ -9,20 +10,23 @@ fn main() {
 
     let mut total_score: i32 = 0;
 
-    for line in lines {
-        let line_data = line.unwrap();
-        let split = line_data.split_at(line_data.len() / 2);
+    for chunk in lines.tuples::<(_, _, _)>() {
+        let l1 = chunk.0.unwrap();
+        let l2 = chunk.1.unwrap();
+        let l3 = chunk.2.unwrap();
 
-        'compartment_1: for i in split.0.chars() {
-            for j in split.1.chars() {
-                if i == j {
-                    let code = i as i32;
-                    if code >= 97 {
-                        total_score += code - 96;
-                    } else if code >= 65 {
-                        total_score += code - 38;
+        'line_1: for i in l1.chars() {
+            for j in l2.chars() {
+                for k in l3.chars() {
+                    if i == j && j == k {
+                        let code = i as i32;
+                        if code >= 97 {
+                            total_score += code - 96;
+                        } else if code >= 65 {
+                            total_score += code - 38;
+                        }
+                        break 'line_1;
                     }
-                    break 'compartment_1;
                 }
             }
         }
