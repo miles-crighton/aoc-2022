@@ -53,9 +53,12 @@ fn main() {
             let to: usize = cap[3].parse().unwrap();
             let count: i32 = cap[1].parse().unwrap();
 
+            let mut crates_to_move = Vec::new();
             for _ in 0..count {
-                let moved_crate = crates[from - 1].pop().unwrap();
-                crates[to - 1].push(moved_crate);
+                crates_to_move.push(crates[from - 1].pop().unwrap())
+            }
+            for crate_to_move in crates_to_move.into_iter().rev().collect::<Vec<char>>() {
+                crates[to - 1].push(crate_to_move);
             }
         }
     }
