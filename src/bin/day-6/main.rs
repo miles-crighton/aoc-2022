@@ -1,24 +1,26 @@
 #[path = "../../utils.rs"]
 mod utils;
-use itertools::Itertools;
 use std::path::Path;
 use utils::read_lines;
 
 fn main() {
     let path = Path::new("src/bin/day-6/input.txt");
 
-    let mut idx = 4;
-    for (a, b, c, d) in read_lines(path)
+    let mut idx = 14;
+    'outer: for win in read_lines(path)
         .next()
         .unwrap()
         .unwrap()
-        .chars()
-        .tuple_windows()
+        .as_bytes()
+        .windows(14)
     {
-        if a != b && a != c && a != d && b != c && b != d && c != d {
-            break;
+        for i in 1..win.len() {
+            if win[i..].contains(&win[i - 1]) {
+                idx += 1;
+                continue 'outer;
+            }
         }
-        idx += 1;
+        break;
     }
 
     println!("Sequence begins at: {:#?}", idx)
